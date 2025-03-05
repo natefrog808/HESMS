@@ -1,7 +1,5 @@
 # ArgOS Hierarchical Episodic-Semantic Memory System (HESMS)
 
-![HESMS Banner](https://user-images.githubusercontent.com/placeholder/hesms-banner.png)
-
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)]()
 
