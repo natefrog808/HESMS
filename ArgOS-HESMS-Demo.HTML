@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArgOS Hierarchical Episodic-Semantic Memory System Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e2e;
+            color: #f8f8f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #44475a;
+            padding-bottom: 20px;
+        }
+        h1 {
+            color: #bd93f9;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #ff79c6;
+            font-size: 1.5em;
+        }
+        .description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            color: #50fa7b;
+            font-weight: bold;
+        }
+        .simulation-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .canvas-container {
+            padding: 10px;
+            background-color: #282a36;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        canvas {
+            background-color: #21222c;
+            border-radius: 4px;
+            width: 100%;
+            height: 600px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            background-color: #bd93f9;
+            color: #282a36;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #ff79c6;
+        }
+        .stats-panel {
+            background-color: #282a36;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .stats-header h3 {
+            color: #8be9fd;
+            margin: 0;
+        }
+        .stats-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .agent-card {
+            background-color: #44475a;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        .agent-card h4 {
+            color: #f1fa8c;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #6272a4;
+            padding-bottom: 8px;
+        }
+        .agent-stat {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .agent-stat-label {
+            color: #ff79c6;
+        }
+        .agent-consciousness {
+            margin-top: 15px;
+            border-top: 1px dashed #6272a4;
+            padding-top: 10px;
+        }
+        .agent-consciousness h5 {
+            color: #f1fa8c;
+            margin: 0 0 10px 0;
+        }
+        .debug-panel {
+            margin-top: 30px;
+            background-color: #282a36;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .debug-panel pre {
+            background-color: #21222c;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #6272a4;
+            font-size: 0.9em;
+            padding: 20px 0;
+            border-top: 1px solid #44475a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ArgOS Hierarchical Episodic-Semantic Memory System</h1>
+            <p>A sophisticated, cloud-integrated memory extension for the ArgOS framework, modeling human-like memory with episodic and semantic layers.</p>
+        </header>
+
+        <section class="description">
+            <h2>About HESMS</h2>
+            <p>The <span class="highlight">ArgOS Hierarchical Episodic-Semantic Memory System (HESMS)</span> enhances agent cognition with persistent memory, pattern recognition, and memory-guided decisions. The system models human-like memory with dual-layer architecture:</p>
+            <ul>
+                <li><strong>Episodic Memory</strong>: Records specific events and experiences</li>
+                <li><strong>Semantic Memory</strong>: Extracts patterns and generalizations from experiences</li>
+            </ul>
+            <p>Enhanced with a <span class="highlight">Consciousness Extension</span> that enables:</p>
+            <ul>
+                <li><strong>Dream States</strong>: Agents process memories during simulated dream cycles</li>
+                <li><strong>Self-Reflection</strong>: Agents analyze their behavior and extract insights</li>
+                <li><strong>Imagination</strong>: Agents simulate potential scenarios before acting</li>
+                <li><strong>Narrative Construction</strong>: Agents build personal stories from memories</li>
+            </ul>
+        </section>
+
+        <section class="simulation-area">
+            <div class="controls">
+                <button id="startBtn">Start Simulation</button>
+                <button id="pauseBtn">Pause</button>
+                <button id="resetBtn">Reset</button>
+                <button id="addAgentBtn">Add Agent</button>
+                <button id="addResourceBtn">Add Resource</button>
+                <button id="addHazardBtn">Add Hazard</button>
+                <button id="triggerRealityShiftBtn">Trigger Reality Shift</button>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #2ecc71;"></div>
+                    <span>Agent</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f1c40f;"></div>
+                    <span>Resource</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #7f8c8d;"></div>
+                    <span>Obstacle</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #e74c3c;"></div>
+                    <span>Hazard</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(155, 89, 182, 0.5);"></div>
+                    <span>Memory Aura</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: rgba(41, 128, 185, 0.3);"></div>
+                    <span>Consciousness Aura</span>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="simulationCanvas"></canvas>
+            </div>
+
+            <div class="stats-panel">
+                <div class="stats-header">
+                    <h3>Agent Statistics</h3>
+                    <button id="refreshStatsBtn">Refresh Stats</button>
+                </div>
+                <div class="stats-content" id="agentStats">
+                    <!-- Agent stats will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <div class="debug-panel">
+                <h3>Memory and Consciousness Debug</h3>
+                <div class="controls">
+                    <button id="showMemoryBtn">Show Memory Patterns</button>
+                    <button id="showDreamsBtn">Show Dream States</button>
+                    <button id="showNarrativesBtn">Show Narratives</button>
+                    <button id="showInsightsBtn">Show Insights</button>
+                </div>
+                <pre id="debugOutput">Select an option above to view debug information...</pre>
+            </div>
+        </section>
+
+        <footer>
+            <p>ArgOS Hierarchical Episodic-Semantic Memory System &copy; Project 89</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { createCognitiveSimulation, runDemoSimulation } from './argos-integration.js';
+
+        let simulation = null;
+        let isRunning = false;
+        let selectedAgent = null;
+
+        // DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const addAgentBtn = document.getElementById('addAgentBtn');
+        const addResourceBtn = document.getElementById('addResourceBtn');
+        const addHazardBtn = document.getElementById('addHazardBtn');
+        const triggerRealityShiftBtn = document.getElementById('triggerRealityShiftBtn');
+        const refreshStatsBtn = document.getElementById('refreshStatsBtn');
+        const agentStatsContainer = document.getElementById('agentStats');
+        const showMemoryBtn = document.getElementById('showMemoryBtn');
+        const showDreamsBtn = document.getElementById('showDreamsBtn');
+        const showNarrativesBtn = document.getElementById('showNarrativesBtn');
+        const showInsightsBtn = document.getElementById('showInsightsBtn');
+        const debugOutput = document.getElementById('debugOutput');
+
+        // Initialize simulation
+        async function initSimulation() {
+            simulation = await runDemoSimulation('simulationCanvas', 5, 10, 7, 3);
+            updateAgentStats();
+        }
+
+        // Start/pause simulation
+        startBtn.addEventListener('click', () => {
+            if (!simulation) {
+                initSimulation();
+            }
+            isRunning = true;
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            isRunning = false;
+        });
+
+        // Reset simulation
+        resetBtn.addEventListener('click', async () => {
+            isRunning = false;
+            simulation = null;
+            await initSimulation();
+        });
+
+        // Add new agent
+        addAgentBtn.addEventListener('click', () => {
+            if (!simulation) return;
+            simulation.createAgent({
+                x: Math.random() * 180,
+                y: Math.random() * 180,
+                adaptability: 40 + Math.random() * 30,
+                emotional: 40 + Math.random() * 20
+            });
+            updateAgentStats();
+        });
+
+        // Add resource
+        addResourceBtn.addEventListener('click', () => {
+            if (!simulation) return;
+            simulation.createEnvironmentalEntity(
+                0, // Resource
+                Math.random() * 180,
+                Math.random() * 180
+            );
+        });
+
+        // Add hazard
+        addHazardBtn.addEventListener('click', () => {
+            if (!simulation) return;
+            simulation.createEnvironmentalEntity(
+                2, // Hazard
+                Math.random() * 180,
+                Math.random() * 180
+            );
+        });
+
+        // Trigger reality shift
+        triggerRealityShiftBtn.addEventListener('click', () => {
+            if (!simulation) return;
+            // Find all agents
+            const agentEntities = Array.from({ length: simulation.world.entities.length }, (_, i) => i)
+                .filter(i => simulation.world.components.SensoryData[i]);
+            
+            // Apply reality shift to all agents
+            agentEntities.forEach(agent => {
+                simulation.world.components.RealityFlux.effectType[agent] = 
+                    Math.floor(Math.random() * 3) + 1; // 1: Teleport, 2: Phase, 3: Transform
+                
+                // Create a timeout to reset the effect
+                setTimeout(() => {
+                    if (simulation.world.components.RealityFlux[agent]) {
+                        simulation.world.components.RealityFlux.effectType[agent] = 0;
+                    }
+                }, 3000);
+            });
+        });
+
+        // Refresh agent stats
+        refreshStatsBtn.addEventListener('click', updateAgentStats);
+
+        // Show memory patterns
+        showMemoryBtn.addEventListener('click', () => {
+            if (!simulation || !selectedAgent) {
+                debugOutput.textContent = "Please select an agent first by clicking on its stats card.";
+                return;
+            }
+            
+            const patterns = simulation.memoryManager.findRelevantPatterns(selectedAgent);
+            debugOutput.textContent = JSON.stringify(patterns, null, 2);
+        });
+
+        // Show dream states
+        showDreamsBtn.addEventListener('click', () => {
+            if (!simulation || !selectedAgent) {
+                debugOutput.textContent = "Please select an agent first by clicking on its stats card.";
+                return;
+            }
+            
+            const dreams = simulation.consciousnessManager.getAgentDreams(selectedAgent);
+            debugOutput.textContent = JSON.stringify(dreams, null, 2);
+        });
+
+        // Show narratives
+        showNarrativesBtn.addEventListener('click', () => {
+            if (!simulation || !selectedAgent) {
+                debugOutput.textContent = "Please select an agent first by clicking on its stats card.";
+                return;
+            }
+            
+            const narratives = simulation.consciousnessManager.getAgentNarratives(selectedAgent);
+            debugOutput.textContent = JSON.stringify(narratives, null, 2);
+        });
+
+        // Show insights
+        showInsightsBtn.addEventListener('click', () => {
+            if (!simulation || !selectedAgent) {
+                debugOutput.textContent = "Please select an agent first by clicking on its stats card.";
+                return;
+            }
+            
+            const insights = simulation.consciousnessManager.getAgentInsights(selectedAgent);
+            debugOutput.textContent = JSON.stringify(insights, null, 2);
+        });
+
+        // Update agent stats display
+        function updateAgentStats() {
+            if (!simulation) return;
+            
+            agentStatsContainer.innerHTML = '';
+            
+            const agentEntities = Array.from({ length: simulation.world.entities.length }, (_, i) => i)
+                .filter(i => simulation.world.components.SensoryData[i]);
+            
+            agentEntities.forEach(agent => {
+                const stats = simulation.getAgentStats(agent);
+                if (!stats) return;
+                
+                const agentCard = document.createElement('div');
+                agentCard.className = 'agent-card';
+                agentCard.dataset.agentId = agent;
+                
+                if (selectedAgent === agent) {
+                    agentCard.style.borderLeft = '4px solid #50fa7b';
+                }
+                
+                agentCard.addEventListener('click', () => {
+                    selectedAgent = agent;
+                    updateAgentStats();
+                    
+                    // Update all cards to reflect selection
+                    document.querySelectorAll('.agent-card').forEach(card => {
+                        if (parseInt(card.dataset.agentId) === selectedAgent) {
+                            card.style.borderLeft = '4px solid #50fa7b';
+                        } else {
+                            card.style.borderLeft = 'none';
+                        }
+                    });
+                });
+                
+                // Build the agent card content
+                const goalTypes = ['Explore', 'Resource', 'Avoid Hazard', 'Social'];
+                
+                agentCard.innerHTML = `
+                    <h4>Agent ${agent}</h4>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Position:</span>
+                        <span>(${stats.position.x.toFixed(1)}, ${stats.position.y.toFixed(1)})</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Goal:</span>
+                        <span>${goalTypes[stats.goal] || 'Unknown'}</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Emotional State:</span>
+                        <span>${stats.emotional ? stats.emotional.toFixed(1) : 'N/A'}</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Adaptability:</span>
+                        <span>${stats.adaptability ? stats.adaptability.toFixed(1) : 'N/A'}</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Memory Fidelity:</span>
+                        <span>${stats.memoryFidelity.toFixed(2)}</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Episodic Memories:</span>
+                        <span>${stats.episodicMemories}</span>
+                    </div>
+                    <div class="agent-stat">
+                        <span class="agent-stat-label">Semantic Patterns:</span>
+                        <span>${stats.semanticPatterns}</span>
+                    </div>
+                `;
+                
+                // Add consciousness stats if available
+                if (stats.consciousness) {
+                    const consciousness = stats.consciousness;
+                    const consciousnessHtml = `
+                        <div class="agent-consciousness">
+                            <h5>Consciousness</h5>
+                            <div class="agent-stat">
+                                <span class="agent-stat-label">Self-Awareness:</span>
+                                <span>${consciousness.selfAwareness.toFixed(2)}</span>
+                            </div>
+                            <div class="agent-stat">
+                                <span class="agent-stat-label">Dreaming:</span>
+                                <span>${consciousness.isDreaming ? 'Yes' : 'No'}</span>
+                            </div>
+                            <div class="agent-stat">
+                                <span class="agent-stat-label">Narrative Complexity:</span>
+                                <span>${consciousness.narrativeComplexity.toFixed(2)}</span>
+                            </div>
+                            <div class="agent-stat">
+                                <span class="agent-stat-label">Imagination:</span>
+                                <span>${consciousness.imaginationCapacity.toFixed(2)}</span>
+                            </div>
+                            <div class="agent-stat">
+                                <span class="agent-stat-label">Integration:</span>
+                                <span>${consciousness.integrationIndex.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                    agentCard.innerHTML += consciousnessHtml;
+                }
+                
+                agentStatsContainer.appendChild(agentCard);
+            });
+        }
+
+        // Run simulation automatically on page load
+        window.addEventListener('load', () => {
+            initSimulation();
+        });
+    </script>
+</body>
+</html>
