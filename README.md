@@ -9,10 +9,6 @@
 
 **HESMS** is a groundbreaking cognitive architecture that elevates simulation agents into entities with human-like memory and consciousness. Built atop the powerful ArgOS framework, HESMS combines a **dual-layer memory system**—episodic and semantic—with advanced consciousness capabilities. Agents don’t just react; they **remember**, **learn**, **dream**, **imagine**, and even weave their experiences into compelling narratives.
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/placeholder/hesms-architecture.png" alt="HESMS Architecture" width="600"/>
-</p>
-
 Ideal for AI researchers, cognitive scientists, and simulation enthusiasts, HESMS offers an unparalleled platform to explore the frontiers of artificial cognition.
 
 ## ✨ Key Features
